@@ -1,15 +1,120 @@
-Develop a Feed Check Monitor for Snowflake feeds to verify that all expected feeds arrive on time and contain valid data.
-Validate that feeds are arriving within their expected timeframes.
-Check the slice timestamp (SLC TM) of the data to ensure it's within the specified thresholds (e.g., 120 minutes)
-Verify feeds based on criteria such as:
-     business date matches the expected date.
-     data falls within specific start-of-day (SOD) and end-of-day (EOD) ranges.
+create or replace storage integration s3_int
+  TYPE = EXTERNAL_STAGE
+  STORAGE_PROVIDER = S3
+  ENABLED = TRUE 
+  STORAGE_AWS_ROLE_ARN = 'arn:aws:iam::072097020909:role/awss3_Snowflake_integr'
+  STORAGE_ALLOWED_LOCATIONS = ('s3://movingsnowflakedata/snowflake to s3/')
+  COMMENT = 'Integration with aws s3 buckets';
 
-The system will reference configuration files (e.g., in the API feature config folder) containing:
-Feed names.
-Expected arrival times.
-Associated Snowflake tables (e.g., "AIR IP" database).
+SHOW INTEGRATIONS
+  DESC integration s3_int;
 
-Reference and adapt the existing S3 Feed Check Monitor (written by Craig) to handle Snowflake credentials and queries.
-If any issues are detected (e.g., missing feeds or data outside thresholds), generate alerts.
-Send notifications via email based on the configuration.
+
+  create or replace file format unloading_ff
+type = 'csv' , field_delimiter ='|' , skip_header = 0, empty_field_as_null = true;
+
+
+
+create or replace stage unload_stage
+url = 's3://movingsnowflakedata/snowflake to s3/'
+storage_integration = s3_int
+file_format = unloading_ff;
+
+select * from customer
+
+COPY INTO @unload_stage
+FROM SNOWFLAKE_TEST.PUBLIC.SFTOS3 ;
+
+
+
+============================================================
+
+stream and task
+
+CREATE TABLE logs (
+  log_id STRING,
+  log_message STRING,
+  created_at TIMESTAMP_LTZ
+);
+
+
+
+stream=============
+
+CREATE OR REPLACE STREAM SFLOG_MONITOR
+  ON TABLE SFTOS3;
+  SHOW_INITIAL_ROWS = TRUE;
+
+
+--drop stream SFLOG_MONITOR
+
+
+
+  task===============================
+
+CREATE OR REPLACE TASK copy_to_s3_task
+  WAREHOUSE = COMPUTE_WH
+  SCHEDULE = 'USING CRON * 10 * * SUN UTC' -- Runs every hour (adjust as needed)
+AS
+  -- Copy the new data from the stream into S3
+  COPY INTO @unload_stage
+  FROM (SELECT * FROM SNOWFLAKE_TEST.PUBLIC.SFTOS3 WHERE METADATA$ACTION = 'INSERT')
+  FILE_FORMAT = (TYPE = 'CSV', COMPRESSION = 'GZIP');
+
+
+    
+    -- Mark the stream as consumed
+    ALTER STREAM SFLOG_MONITOR RESUME;
+  END;
+
+  SELECT * FROM SFLOG_MONITOR;
+
+  
+
+ 
+ ALTER TASK COPY_TO_S3_TASK RESUME;
+
+
+
+  select * from snowflake_test.public.sftos3 where c_custkey = '105001'
+
+insert into snowflake_test.public.sftos3 (C_CUSTKEY,C_NAME,C_ADDRESS,C_NATIONKEY,C_PHONE,C_ACCTBAL,C_MKTSEGMENT,C_COMMENT)
+values (5067021,'CustomerYTSE#002305001','KNMTLKDLWHLTPYKIOPLKJM69654','23','23-546-154-3951','6576','NEW SONATA','Testing data from snow to S3');
+
+
+
+
+
+
+
+
+
+
+
+USE DATABASE snowflake_sample_data;
+
+USE SCHEMA tpch_sf1;
+
+CREATE TABLE snowflake_test.public.sftos3 AS SELECT * FROM customer;
+
+select * from SFTOS3
+
+COPY INTO 
+
+
+
+
+SFLOG_MONITOR
+
+
+
+
+create or replace task SNOWFLAKE_TEST.PUBLIC.COPY_TO_S3_TASK
+	warehouse=COMPUTE_WH
+	schedule='USING CRON * 10 * * SUN UTC'
+	as COPY INTO @unload_stage
+  FROM (SELECT * FROM SNOWFLAKE_TEST.PUBLIC.SFLOG_MONITOR WHERE METADATA$ACTION = 'INSERT')
+  FILE_FORMAT = (TYPE = 'CSV', COMPRESSION = 'GZIP');
+
+
+
