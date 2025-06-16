@@ -1,10 +1,2 @@
-rpm -q \
-  python3-numpy \
-  python3-pyjwt \
-  python3-protobuf \
-  protobuf-devel \
-  python3-werkzeug \
-  python3-cgi \
-  python3-jackson-databind \
-  golang-github.org.x.crypto \
-  gopkg-in-yaml-v2
+AZ=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)
+echo "Availability Zone: $AZ"
