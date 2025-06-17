@@ -1,9 +1,17 @@
-Old Libraries Exist, New Libraries Exist ----Likely safe to delete old ones (need to confirm Akash is not using them).
 
-Old Libraries Do Not Exist:  --go back to Evergreen team and ask them to rerun the scan; data may be outdated.
-
- Akash is not using Anaconda libraries and his application installs only the needed packages from requirements.txt, you can uninstall Anaconda to clean up—
-
-Discuss if his apps are still dependent on Anaconda or if everything is handled by requirements.txt——
-If only old libraries exist, and no newer versions are found—— application still depends on the old versions——
-Are these old libraries still actively used…?
+PING ad7d7255104eb0214de6e8486a9d058d-c3cef 3bb51f6ae53.elb.us-east-1. amazonaws.com (52.0.86.87) 56(84) bytes of data.
+ad7d7255104eb0214de608486a9d058d-c3cef3bb51f6a053.elb.us-east-1.amazonaws.com ping statistics ---
+3 packets transmitted, 0 received, 100% packet loss, time 2044ms
+[ssudarsa@cvlinq0223 -]$ curl dtccriskqa.privatelink. us-east-1.snowflakecomputing.com
+AC
+[ssudarsa@cvlinq0223 ~]$ curl -v -x Whttp://proxy.us-east-1.appqa.dtcc.org:8080"https://dtccriskqa. us-east-1.snowflakecomputing.com"
+Rebuilt URL to: https://dtccriskqa.us-east-1.snowflakecomputing.com/
+Trying 10. 200. 38. 200. . .
+TCP_NODELAY set
+Connected to proxy. us-east-1.appqa. dtcc.org (10.200.38.200) port 8080 (#o)
+allocate connect buffer!
+Establish HTTP proxy tunnel to dtccriskqa. us-east-1.snowflakecomputing.com:443
+CONNECT dtccriskga. us-east-1. snowf lakecomputing. com:443 HTTP/1.1
+Host: dtccriskqa. us-east-1.snowflakecomputing.com:443
+user-Agent: cur 1/7.61.1
+Proxy-Cornection: Keep-Alive
