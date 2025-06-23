@@ -1,1 +1,1 @@
-curl -v https://dtccmdudev.us-east-1.privatelink.snowflakecomputing.com:443
+curl -Iv https://dtcc-dwcqap.privatelink.snowflakecomputing.com 
