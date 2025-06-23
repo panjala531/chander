@@ -1,1 +1,35 @@
-curl -Iv https://dtcc-dwcqap.privatelink.snowflakecomputing.com 
+insert_job: LQT_OPSR_DEPLOY_CONFIG_QAP   job_type: CMD
+box_name: LQT_OPSR_DEPLOY_CONFIG_QAP_BOX
+command: /apps/risk/lqt/venvs/lqt-dbt-venv/bin/python3 /apps/risk/lqt/dbt_transformations/installedApp/deployment/deployment_setup.py
+machine: cvling0228.dtcc.com
+owner: apadmin
+permission:
+date_conditions: 0
+description: "Uploading the zip file"
+job_terminator: 1
+std_out_file: ">/apps/risk/lqt/dbt_transformations/logs/lqt_opsr_deploy_config_qap_$( date +%Y%m%d_%H%M%S ).log"
+std_err_file: ">/apps/risk/lqt/dbt_transformations/logs/lqt_opsr_deploy_config_qap_$( date +%Y%m%d_%H%M%S ).err"
+alarm_if_fail: 1
+alarm_if_terminated: 1
+group: LQT
+application: LQT_ORCHESTRATION
+svcdesk_desc: "RITM2278332"
+envvars: PYTHONPATH="/apps/risk/lqt/venvs/lqt-dbt-venv/lib/python3.9/site-packages/:/apps/risk/lqt/dbt_transformations/installedApp/"
+envvars: PATH="/usr/bin:/usr/local/sbin:/apps/risk/venvs/lqt-dbt-venv/bin/:/home/apadmin/bin"
+profile: default_profile
+max_run_alarm: 60
+
+insert_job: LQT_DBT_ORCHESTRATION_START_BOX   job_type: BOX
+owner: apadmin
+permission:
+date_conditions: 1
+# Comment out or use a valid calendar
+# exclude_calendar: NA
+description: "BOX to upload the zip file"
+alarm_if_fail: 1
+alarm_if_terminated: 1
+group: LQT
+svcdesk_desc: "RITM2278332"
+# Since it's manual, exclude these OR provide valid times
+# days_of_week: mo,tu,we
+# start_times: "10:30"
