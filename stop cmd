@@ -1,4 +1,8 @@
-https://app.snowflake.com/dtcc/dtccriskprod-aws-us-east-1/#/homepage
-curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep region
-
-curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region, .accountId'
+Sub InsertRowEveryThree()
+    Dim i As Long
+    Dim lastRow As Long
+    lastRow = Cells(Rows.Count, "A").End(xlUp).Row
+    For i = lastRow To 4 Step -3
+        Rows(i).Insert Shift:=xlDown
+    Next i
+End Sub
