@@ -1,9 +1,9 @@
-1 pushDataToSplunk(...)	Sends event data to Splunk via HEC
-2	processS3File(...)	Reads S3 file, extracts and batches lines as Splunk events
-3	process_s3_event(...)	Wrapper to extract bucket and key from event record and call processS3File()
-4	purge_s3_object(...)	Deletes an S3 object explicitly (called manually if needed)
-5	s3_exists(...)	Checks if a specific object exists in S3 (used for flag-based control)
-6	process_trigger(...)	Handles SQS/SNS/S3 triggered events and invokes processing
-7	lambda_handler(...)	AWS Lambda entry point; orchestrates config loading and event routing
-8	gc.collect() (used as call)	Not a function you defined, but invoked to free memory
-9	open(...) from smart_open	Used to stream S3 file contents line-by-line
+Initially, we replicated only DDLs, but this caused view creation failures due to missing dependencies (RFR DB)
+
+we're now replicating both DDL and data.
+
+Before proceeding, we're:
+
+Backing up the existing ARIP DB (to prevent data loss as replication will replace the existing DB and we may loose the Access again),
+
+Setting up temporary replication from QAP East to QAE East for validation.
