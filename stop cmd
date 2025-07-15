@@ -1,33 +1,7 @@
 SELECT 
-    query_text,
-    user_name,
-    start_time
+    view_definition
 FROM 
-    SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY
+    MY_DB.INFORMATION_SCHEMA.VIEWS
 WHERE 
-    query_text ILIKE '%<view_name>%'
-    AND start_time >= DATEADD(day, -30, CURRENT_TIMESTAMP())  -- Adjust time window
-ORDER BY 
-    start_time DESC
-LIMIT 1;
-
-
-
-
-
-=================
-
-SELECT 
-    user_name,
-    access_time,
-    object_name,
-    object_type
-FROM 
-    SNOWFLAKE.ACCOUNT_USAGE.ACCESS_HISTORY
-WHERE 
-    object_name = '<view_name>'
-    AND object_type = 'VIEW'
-    AND access_time >= DATEADD(day, -30, CURRENT_TIMESTAMP())  -- Adjust as needed
-ORDER BY 
-    access_time DESC
-LIMIT 1;
+    table_name = 'MY_VIEW'
+    AND table_schema = 'MY_SCHEMA';
