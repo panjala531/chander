@@ -1,7 +1,4 @@
-SELECT 
-    view_definition
-FROM 
-    MY_DB.INFORMATION_SCHEMA.VIEWS
-WHERE 
-    table_name = 'MY_VIEW'
-    AND table_schema = 'MY_SCHEMA';
+SELECT *
+FROM SNOWFLAKE.ACCOUNT_USAGE.OBJECT_DEPENDENCIES
+WHERE OBJECT_NAME = '<view_name>'
+  AND OBJECT_DATABASE = '<your_view_db>';
