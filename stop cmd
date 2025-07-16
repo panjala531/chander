@@ -16,3 +16,21 @@ FROM
 WHERE
   OBJECT_NAME = 'MY_VIEW'
   AND OBJECT_DATABASE = 'SOURCE_DB';
+
+=======================
+
+SELECT 
+    object_database,
+    object_schema,
+    object_name,
+    referenced_database,
+    referenced_schema,
+    referenced_object_name
+FROM 
+    SNOWFLAKE.ACCOUNT_USAGE.OBJECT_DEPENDENCIES
+WHERE 
+    object_database = '<your_db_name>'
+    AND object_type = 'VIEW'
+    AND referenced_database IS NOT NULL
+    AND referenced_database != object_database;
+
