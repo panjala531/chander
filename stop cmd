@@ -1,10 +1,9 @@
-SELECT 
-    table_catalog AS database_name,
-    table_schema,
-    table_name,
-    row_count,
-    bytes / 1024 / 1024 AS size_mb
-FROM 
-    MYDB.information_schema.table_storage_metrics
-ORDER BY 
-    size_mb DESC;
+SELECT *
+FROM clw.clw_cns.clw_vw_fact_sfk_query_history
+WHERE account_nm = 'DTCRISKPROD'
+--  AND user_nm = 'SRVC_DAP_UXL_SFDIAS'
+--  AND query_type_dsc = 'SELECT'
+--  AND warehouse_nm = 'DAP_ADHOC_WH'
+  AND start_ts >= '2025-01-01'
+  AND query_txt ILIKE '%WM_HISTRY_SCRTY_INSTRMNT_DIM%'
+;
