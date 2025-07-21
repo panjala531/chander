@@ -1,1 +1,10 @@
-curl http://169.254.169.254/latest/dynamic/instance-identity/document
+SELECT 
+    table_catalog AS database_name,
+    table_schema,
+    table_name,
+    row_count,
+    bytes / 1024 / 1024 AS size_mb
+FROM 
+    MYDB.information_schema.table_storage_metrics
+ORDER BY 
+    size_mb DESC;
