@@ -1,9 +1,9 @@
-SELECT *
-FROM clw.clw_cns.clw_vw_fact_sfk_query_history
-WHERE account_nm = 'DTCRISKPROD'
---  AND user_nm = 'SRVC_DAP_UXL_SFDIAS'
---  AND query_type_dsc = 'SELECT'
---  AND warehouse_nm = 'DAP_ADHOC_WH'
-  AND start_ts >= '2025-01-01'
-  AND query_txt ILIKE '%WM_HISTRY_SCRTY_INSTRMNT_DIM%'
-;
+SELECT 
+    TABLE_CATALOG,
+    TABLE_SCHEMA,
+    TABLE_NAME,
+    CREATED
+FROM 
+    INFORMATION_SCHEMA.VIEWS
+WHERE 
+    TABLE_NAME = 'YOUR_VIEW_NAME';
