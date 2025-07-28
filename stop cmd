@@ -1,24 +1,52 @@
-SHOW GRANTS ON DATABASE your_database_name;
+2025-07-25 14:18:56, 345 - deployment.snowflake handler - ERROR - Unable to fetch token from HiPAM:
 
+2025-07-25 14:18:56, 346 - deployment.snowflake handler - ERROR - deployment. snowflake_handler. update_token - Exception: ('Unable to fetch token from HiPAM', '')
+Traceback (most recent call last)
+File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 50, in update_token
+raise ValueError ("Unable to fetch token from HiPAM", result. stdout. decode ('utf-8' ) )
+ValueError: ('Unable to fetch token from HiPAM', ''
+2025-07-25 14:18:56, 346 - deployment. snowflake_handler
+Traceback (most recent call last) :
+File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 107, in get_sf_connection
+update_token ()
+File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 53, in update_token
+raise e
+File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 50, in update_token
+raise ValueError ("Unable to fetch token from HiPAM", result.stdout.decode ('utf-8') )
+ValueError: ('Unable to fetch token from HiPAM', '")
+2025-07-25 14:18:56,346 - deployment.snowflake_handler -
+2025-07-25 14:18:56, 346 - deployment. job_runner_utils. dbthost_utils - ERROR - deployment. job_runner_utils.dbthost_utils.get_host_status - Exception: Failed to execute query!
+Traceback (most recent call last) :
+File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 196, in execute_query
+sf_connection = get_sf_connection (env=env, profiles_dir-profiles_dir)
+File "/apps/risk/1qt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 137, in get_sf_connection
+raise e
+File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 107, in get_sf_connection
+update_token ()
+File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 53, in update_token
+raise e
+File "/apps/risk/1qt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 50, in update_token
+raise ValueError ("Unable to fetch token from HiPAM", result.stdout. decode ('utf-8') )
+ValueError: ('Unable to fetch token from HiPAM', '')
 
-============================
+The above exception was the direct cause of the following exception:
 
-SHOW GRANTS ON DATABASE ARIP;
-
-
---------------------------
-
-SELECT 
-    GRANTEE_NAME AS ROLE_NAME,
-    PRIVILEGE
-FROM 
-    SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_ROLES
-WHERE 
-    OBJECT_TYPE = 'DATABASE'
-    AND OBJECT_NAME = 'ARIP';
------------------------------------
-
-SELECT *
-FROM SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_ROLES
-WHERE OBJECT_TYPE = 'SCHEMA'
-  AND OBJECT_NAME = 'MASTER';  -- your schema name
+Traceback (most recent call last) :
+File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/job_runner_utils/dbthost_utils.py", line 89, in get_host_status
+response = sf_handler.execute_query (query=select_query, profiles_dir-profiles_dir, env=env)
+File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 207, in execute_query
+raise Exception ("Failed to execute query!") from e
+Exception: Failed to execute query!
+2025-07-25 14:18:56,347 - deployment. job_runner_utils. dbthost_utils
+Traceback (most recent call last) :
+File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 196, in execute_query
+sf_connection = get_sf_connection (env=env, profiles_dir=profiles_dir)
+File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 137, in get_sf_connection
+raise e
+File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 107, in get_sf_connection
+update_token ()
+File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 53, in update_token
+raise e
+File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 50, in update_token
+raise ValueError ("Unable to fetch token from HiPAM", result.stdout.decode ('utf-8') )
+ValueError: ('Unable to fetch token from HiPAM', '')
