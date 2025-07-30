@@ -1,5 +1,5 @@
-Hi Narsimha,
+As discussed, your team is using the view VW_HISTRY_SCRTY_INSTRMNT_DIM in the ARIP DB Master schema, which references SHARE_DAP_PROD.
 
-We noticed that your team is using the view VW_HISTRY_SCRTY_INSTRMNT_DIM in ARIP, which references SHARE_DAP_PROD. This view was originally intended for limited use and has known data quality concerns.
+We currently have conditional approval to access SHARE_DAP_PROD from the DAP business owner.
 
-To proceed with necessary approvals and next steps, could you please share the business use case for this usage?
+To proceed with the required approvals and next steps, could you please share the business use case for this usage?
