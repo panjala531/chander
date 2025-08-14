@@ -1,54 +1,11 @@
-Initializing Start of day run to populate log tables from Daily plan
-INFO - deployment. job_runner_stop.main - generate log details
-2025-07-25 14:18:56, 345 - deployment.snowflake handler - ERROR - Unable to fetch token from HiPAM:
-
-2025-07-25 14:18:56,346 - deployment.snowflake handler - ERROR - deployment. snowflake_handler. update_token - Exception: ('Unable to fetch token from HiPAM', '')
-Traceback (most recent call last)
-File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 50, in update_token
-raise ValueError ("Unable to fetch token from HiPAM", result. stdout. decode ('utf-8') )
-ValueError: ('Unable to fetch token from HiPAM', '")
-2025-07-25 14:18:56,346 - deployment. snowflake_handler - ERROR - deployment. snowflake_handler.get_sf_connection -
-Traceback (most recent call last) :
-File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 107, in get_sf_connection
-update_token ()
-File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 53, in update_token
-raise e
-File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 50, in update_token
-raise ValueError ("Unable to fetch token from HiPAM", result.stdout.decode ('utf-8') )
-ValueError: ('Unable to fetch token from HiPAM', '')
-2025-07-25 14:18:56,346 - deployment.snowflake_handler - ERROR - deployment.snowflake_handler. execute_query - Failed to execute query! - Exception: ('Unable to fetch token from HiPAM', "')
-2025-07-25 14:18:56, 346 - deployment. job_runner_utils. dbthost_utils - ERROR - deployment. job_runner_utils. dbthost_utils.get_host_status - Exception: Failed to execute query!
-Traceback (most recent call last) :
-File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 196, in execute_query
-sf_connection = get_sf_connection (env=env, profiles_dir-profiles_dir)
-File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 137, in get_st_connection
-raise e
-File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 107, in get_st_connection
-update_token ()
-File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 53, in update_token
-raise e
-File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 50, in update_token
-raise ValueError ("Unable to fetch token from HiPAM", result. stdout. decode ('utf-8') )
-ValueError: ('Unable to fetch token from HiPAM', '')
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last) :
-File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/job_runner_utils/dbthost_utils.py", line 89, in get_host_status
-response = sf_handler.execute_query (query=select_query, profiles_dir-profiles_dir, env=env)
-file "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 207, in execute_query
-raise Exception ("Failed to execute query!") from
-Exception: Failed to execute query!
-2025-07-25 14:18:56,347 - deployment. job_runner_utils.dbthost_utils - ERROR - deployment. job_runner_utils.dbthost_utils. update_host - Exception: Failed to execute query!
-Traceback (most recent call last) :
-File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 196, in execute_query
-sf_connection = get_st_connection (env=env, profiles_dir=profiles_dir)
-File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 137, in get_sf_connection
-raise e
-File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 107, in get_sf_connection
-update_token ()
-File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 53, in update_token
-raise e
-File "/apps/risk/lqt/dbt_transformations/installedApp/deployment/snowflake_handler.py", line 50, in update_token
-raise ValueError ("Unable to fetch token from HiPAM", result.stdout.decode ('utf-8') )
-ValueError: ('Unable to fetch token from HiPAM', '')
+SELECT 
+    query_id,
+    user_name,
+    warehouse_name,
+    start_time,
+    end_time,
+    execution_status
+FROM snowflake.account_usage.query_history
+WHERE warehouse_name = '<WAREHOUSE_NAME>'
+  AND start_time >= DATEADD('minute', -5, CURRENT_TIMESTAMP)
+ORDER BY start_time DESC;
