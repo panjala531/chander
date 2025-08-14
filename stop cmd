@@ -1,11 +1,5 @@
-SELECT 
-    query_id,
-    user_name,
-    warehouse_name,
-    start_time,
-    end_time,
-    execution_status
-FROM snowflake.account_usage.query_history
-WHERE warehouse_name = '<WAREHOUSE_NAME>'
-  AND start_time >= DATEADD('minute', -5, CURRENT_TIMESTAMP)
-ORDER BY start_time DESC;
+I hope you are doing well.
+
+I would like to request your approval to increase our Snowflake warehouse from SMALL to MEDIUM.
+
+This change is needed to ensure smooth operations during role-based execution in our process — specifically, LQT using the LQT role and warehouse, and ARI using the ARI role and warehouse. This setup avoids disconnects during operational rotation and ensures that calculations run without interruption.
