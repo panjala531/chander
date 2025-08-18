@@ -1,3 +1,1 @@
-I would like to request your approval to increase our Snowflake warehouse from SMALL to MEDIUM.
-
-This change is needed to ensure smooth operations during role-based execution — LQT will use the LQT role/warehouse while ARI will use the ARI role/warehouse. This setup helps avoid disconnects during operational rotation and ensures uninterrupted execution of calculations.
+jira.dtcc.com/secure/RapidBoard.jspa?rapidView=23572&projectKey=ARIAPPS&quickFilter=82675#
