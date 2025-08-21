@@ -1,1 +1,4 @@
 curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep region
+
+curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | egrep 'region|accountId'
+
