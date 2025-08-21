@@ -1,9 +1,1 @@
-https://api.uswqa001.ocp.appqa.dtcc.org:6443
-
-===================
-
-telnet api.uswqa001.ocp.appqa.dtcc.org 6443
-
-curl -k https://api.uswqa001.ocp.appqa.dtcc.org:6443/version
-
-ping api.uswqa001.ocp.appqa.dtcc.org
+curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep region
