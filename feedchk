@@ -49,3 +49,8 @@ aws ec2 describe-instance-types --region us-east-1 \
     --query "InstanceTypes[*].[InstanceType,VCpuInfo.DefaultVCpus,MemoryInfo.SizeInMiB,EbsInfo.EbsOptimizedInfo.BaselineBandwidthInMbps]" \
     --output text > types.txt
 
+
+===============================
+curl https://ec2.us-east-1.amazonaws.com
+
+
