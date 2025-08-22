@@ -1,56 +1,6 @@
-#!/bin/bash
-REGION="us-east-1"  # Change region
-OUTPUT_FILE="ec2_config.csv"
-
-echo "InstanceID,InstanceType,CPU,MemoryGiB,DiskPerformance" > $OUTPUT_FILE
-
-for instance in $(aws ec2 describe-instances \
-  --region $REGION \
-  --query "Reservations[*].Instances[*].InstanceId" \
-  --output text)
-do
-    instance_type=$(aws ec2 describe-instances \
-      --instance-ids $instance \
-      --region $REGION \
-      --query "Reservations[*].Instances[*].InstanceType" \
-      --output text)
-
-    # Describe instance types for CPU, memory, storage
-    specs=$(aws ec2 describe-instance-types \
-      --instance-types $instance_type \
-      --region $REGION \
-      --query "InstanceTypes[*].[VCpuInfo.DefaultVCpus, MemoryInfo.SizeInMiB, EbsInfo.EbsOptimizedInfo.BaselineBandwidthInMbps]" \
-      --output text)
-
-    cpu=$(echo $specs | awk '{print $1}')
-    memory=$(echo $specs | awk '{print $2/1024}')  # Convert MiB to GiB
-    disk_bandwidth=$(echo $specs | awk '{print $3}')
-
-    echo "$instance,$instance_type,$cpu,$memory,$disk_bandwidth Mbps" >> $OUTPUT_FILE
-done
-
-echo "Output saved to $OUTPUT_FILE"
-
-
-=====================================
-
-
-chmod +x get_ec2_config.sh
-./get_ec2_config.sh
-
-
-
-=======================
-
-
-aws ec2 describe-instances --query "Reservations[*].Instances[*].[InstanceId,InstanceType]" --output text --region us-east-1 > instances.txt
-
-aws ec2 describe-instance-types --region us-east-1 \
-    --query "InstanceTypes[*].[InstanceType,VCpuInfo.DefaultVCpus,MemoryInfo.SizeInMiB,EbsInfo.EbsOptimizedInfo.BaselineBandwidthInMbps]" \
-    --output text > types.txt
-
-
-===============================
-curl https://ec2.us-east-1.amazonaws.com
-
-
+SELECT granted_role,
+       name AS warehouse_name,
+       privilege
+FROM snowflake.account_usage.grants_to_roles
+WHERE granted_on = 'WAREHOUSE'
+ORDER BY granted_role, warehouse_name;
