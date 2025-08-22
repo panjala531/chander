@@ -1,7 +1,43 @@
-curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r .accountId
+#!/bin/bash
+REGION="us-east-1"  # Change region
+OUTPUT_FILE="ec2_config.csv"
+
+echo "InstanceID,InstanceType,CPU,MemoryGiB,DiskPerformance" > $OUTPUT_FILE
+
+for instance in $(aws ec2 describe-instances \
+  --region $REGION \
+  --query "Reservations[*].Instances[*].InstanceId" \
+  --output text)
+do
+    instance_type=$(aws ec2 describe-instances \
+      --instance-ids $instance \
+      --region $REGION \
+      --query "Reservations[*].Instances[*].InstanceType" \
+      --output text)
+
+    # Describe instance types for CPU, memory, storage
+    specs=$(aws ec2 describe-instance-types \
+      --instance-types $instance_type \
+      --region $REGION \
+      --query "InstanceTypes[*].[VCpuInfo.DefaultVCpus, MemoryInfo.SizeInMiB, EbsInfo.EbsOptimizedInfo.BaselineBandwidthInMbps]" \
+      --output text)
+
+    cpu=$(echo $specs | awk '{print $1}')
+    memory=$(echo $specs | awk '{print $2/1024}')  # Convert MiB to GiB
+    disk_bandwidth=$(echo $specs | awk '{print $3}')
+
+    echo "$instance,$instance_type,$cpu,$memory,$disk_bandwidth Mbps" >> $OUTPUT_FILE
+done
+
+echo "Output saved to $OUTPUT_FILE"
 
 
-curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep accountId
+=====================================
 
 
-curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | sed -n 's/.*"accountId"[ ]*:[ ]*"\?\([0-9]\+\)"\?.*/\1/p'
+chmod +x get_ec2_config.sh
+./get_ec2_config.sh
+
+
+
+=======================
