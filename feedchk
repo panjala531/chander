@@ -41,3 +41,11 @@ chmod +x get_ec2_config.sh
 
 
 =======================
+
+
+aws ec2 describe-instances --query "Reservations[*].Instances[*].[InstanceId,InstanceType]" --output text --region us-east-1 > instances.txt
+
+aws ec2 describe-instance-types --region us-east-1 \
+    --query "InstanceTypes[*].[InstanceType,VCpuInfo.DefaultVCpus,MemoryInfo.SizeInMiB,EbsInfo.EbsOptimizedInfo.BaselineBandwidthInMbps]" \
+    --output text > types.txt
+
