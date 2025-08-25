@@ -1,6 +1,10 @@
-SELECT granted_role,
-       name AS warehouse_name,
-       privilege
-FROM snowflake.account_usage.grants_to_roles
-WHERE granted_on = 'WAREHOUSE'
-ORDER BY granted_role, warehouse_name;
+Hi [ED's Name],
+
+I hope you are doing well.
+
+Could you please approve increasing the warehouse size in QA to Medium? This change is required to ensure QA matches the configuration of both PSE and PROD environments, which will help maintain consistency during performance testing and validation.
+
+Please let me know if you need any additional details before proceeding.
+
+Thank you,
+[Your Name]
